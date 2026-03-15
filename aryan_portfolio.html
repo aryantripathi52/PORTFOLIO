@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aryan Tripathi — AI Web Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #FFE135;
+    --pink: #FF3CAC;
+    --blue: #2B86C5;
+    --cyan: #00F5FF;
+    --dark: #0A0A0A;
+    --white: #FFFFFF;
+    --card-bg: #111111;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 18px; height: 18px;
+    background: var(--yellow);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.2s, height 0.2s, background 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor.big { width: 48px; height: 48px; }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 5%;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.3rem;
+    color: var(--yellow);
+    letter-spacing: -0.5px;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--yellow); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 10rem 5% 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .blob1 { width: 600px; height: 600px; background: var(--pink); top: -100px; right: -100px; animation: blobFloat 8s ease-in-out infinite; }
+  .blob2 { width: 400px; height: 400px; background: var(--cyan); bottom: 0; left: -80px; animation: blobFloat 10s ease-in-out infinite reverse; }
+  @keyframes blobFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-30px)} }
+
+  .hero-tag {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--dark);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+    width: fit-content;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -3px;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero h1 span.pink { color: var(--pink); }
+  .hero h1 span.cyan { color: var(--cyan); }
+
+  .hero-sub {
+    max-width: 520px;
+    margin-top: 1.8rem;
+    color: rgba(255,255,255,0.55);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .btn {
+    padding: 0.85rem 2rem;
+    border-radius: 100px;
+    font-weight: 700; font-size: 0.95rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-block;
+  }
+  .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+  .btn-primary { background: var(--yellow); color: var(--dark); }
+  .btn-outline { border: 2px solid rgba(255,255,255,0.2); color: var(--white); }
+  .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 5%;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.6rem;
+    animation: fadeUp 1s 0.8s ease both;
+  }
+  .scroll-hint::before {
+    content: '';
+    width: 30px; height: 1px;
+    background: rgba(255,255,255,0.3);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION BASE */
+  section { padding: 7rem 5%; position: relative; }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 3.5rem;
+  }
+
+  /* TOOLS */
+  .tools-section { background: #0d0d0d; }
+  .tools-grid {
+    display: flex; flex-wrap: wrap; gap: 1rem;
+  }
+  .tool-chip {
+    padding: 0.6rem 1.4rem;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1.5px solid;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+  .tool-chip:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+  .tc-yellow { border-color: var(--yellow); color: var(--yellow); }
+  .tc-pink   { border-color: var(--pink);   color: var(--pink); }
+  .tc-cyan   { border-color: var(--cyan);   color: var(--cyan); }
+  .tc-blue   { border-color: var(--blue);   color: var(--blue); }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.07);
+    transition: transform 0.3s, border-color 0.3s;
+    position: relative;
+  }
+  .project-card:hover { transform: translateY(-8px); border-color: var(--yellow); }
+  .project-card:hover .card-accent { width: 100%; }
+
+  .card-accent {
+    height: 4px;
+    width: 40%;
+    transition: width 0.4s ease;
+  }
+  .accent-yellow { background: linear-gradient(90deg, var(--yellow), var(--pink)); }
+  .accent-cyan   { background: linear-gradient(90deg, var(--cyan), var(--blue)); }
+  .accent-pink   { background: linear-gradient(90deg, var(--pink), var(--yellow)); }
+
+  .card-body { padding: 1.8rem; }
+  .card-emoji { font-size: 2.2rem; margin-bottom: 1rem; display: block; }
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem; font-weight: 800;
+    margin-bottom: 0.6rem;
+  }
+  .card-desc {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem; line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .tag {
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.5);
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    font-size: 0.75rem;
+  }
+  .card-links { display: flex; gap: 0.8rem; }
+  .card-link {
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .card-link:hover { opacity: 0.75; }
+  .cl-yellow { background: var(--yellow); color: var(--dark); }
+  .cl-outline { border: 1.5px solid rgba(255,255,255,0.2); color: var(--white); }
+
+  /* ABOUT */
+  .about-section { background: #0d0d0d; }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .about-text p {
+    color: rgba(255,255,255,0.6);
+    line-height: 1.9;
+    font-size: 1.05rem;
+    margin-bottom: 1.2rem;
+  }
+  .about-text p strong { color: var(--yellow); font-weight: 700; }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .stat-box {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+  .stat-box:hover { border-color: var(--pink); }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem; font-weight: 800;
+    color: var(--yellow);
+  }
+  .stat-label { color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-top: 0.3rem; }
+
+  /* CONTACT */
+  .contact-inner {
+    background: linear-gradient(135deg, #1a1a1a, #111);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 28px;
+    padding: 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center top, rgba(255,60,172,0.1), transparent 60%);
+  }
+  .contact-inner h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+  }
+  .contact-inner p {
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 2.5rem;
+    font-size: 1.05rem;
+  }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: rgba(255,255,255,0.2);
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  footer span { color: var(--pink); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .nav-links { display: none; }
+    .contact-inner { padding: 2.5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">AT.</div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-blob blob1"></div>
+  <div class="hero-bg-blob blob2"></div>
+  <div class="hero-tag">✦ Available for projects</div>
+  <h1>ARYAN<br><span class="pink">TRIPATH</span><span class="cyan">I</span></h1>
+  <p class="hero-sub">I build bold, modern websites using the power of AI tools — turning ideas into live experiences, fast.</p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">View My Work</a>
+    <a href="#contact" class="btn btn-outline">Let's Connect</a>
+  </div>
+  <div class="scroll-hint">Scroll to explore</div>
+</section>
+
+<!-- TOOLS -->
+<section class="tools-section" id="tools">
+  <div class="section-label">My Stack</div>
+  <div class="section-title">AI Tools I Use</div>
+  <div class="tools-grid">
+    <span class="tool-chip tc-yellow">✦ Claude AI</span>
+    <span class="tool-chip tc-pink">⚡ ChatGPT</span>
+    <span class="tool-chip tc-cyan">◈ v0.dev</span>
+    <span class="tool-chip tc-blue">⬡ Cursor</span>
+    <span class="tool-chip tc-yellow">❋ Framer AI</span>
+    <span class="tool-chip tc-pink">◉ Bolt.new</span>
+    <span class="tool-chip tc-cyan">✿ Webflow</span>
+    <span class="tool-chip tc-blue">▲ Vercel</span>
+    <span class="tool-chip tc-yellow">◆ HTML / CSS</span>
+    <span class="tool-chip tc-pink">⬟ JavaScript</span>
+    <span class="tool-chip tc-cyan">✦ GitHub</span>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Portfolio</div>
+  <div class="section-title">Projects I've Built</div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="card-accent accent-yellow"></div>
+      <div class="card-body">
+        <span class="card-emoji">🛒</span>
+        <div class="card-title">ShopEasy — E-Commerce UI</div>
+        <p class="card-desc">A clean, fast e-commerce landing page built using Claude AI and v0.dev. Features product cards, cart UI, and responsive layout.</p>
+        <div class="card-tags">
+          <span class="tag">Claude AI</span>
+          <span class="tag">v0.dev</span>
+          <span class="tag">HTML/CSS</span>
+        </div>
+        <div class="card-links">
+          <a href="#" class="card-link cl-yellow">Live Demo</a>
+          <a href="#" class="card-link cl-outline">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-accent accent-cyan"></div>
+      <div class="card-body">
+        <span class="card-emoji">🤖</span>
+        <div class="card-title">AskBot — AI Chat Interface</div>
+        <p class="card-desc">A minimal AI chatbot frontend designed with Framer AI and polished with custom CSS. Smooth animations and real-time feel.</p>
+        <div class="card-tags">
+          <span class="tag">Framer AI</span>
+          <span class="tag">ChatGPT</span>
+          <span class="tag">JavaScript</span>
+        </div>
+        <div class="card-links">
+          <a href="#" class="card-link cl-yellow">Live Demo</a>
+          <a href="#" class="card-link cl-outline">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-accent accent-pink"></div>
+      <div class="card-body">
+        <span class="card-emoji">🎨</span>
+        <div class="card-title">CreativeStudio — Agency Site</div>
+        <p class="card-desc">A bold agency website with animated hero, service cards, and testimonials — generated and refined using Bolt.new and Cursor.</p>
+        <div class="card-tags">
+          <span class="tag">Bolt.new</span>
+          <span class="tag">Cursor</span>
+          <span class="tag">CSS Animations</span>
+        </div>
+        <div class="card-links">
+          <a href="#" class="card-link cl-yellow">Live Demo</a>
+          <a href="#" class="card-link cl-outline">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-accent accent-yellow"></div>
+      <div class="card-body">
+        <span class="card-emoji">📊</span>
+        <div class="card-title">DataDash — Dashboard UI</div>
+        <p class="card-desc">A data dashboard template with charts, stats, and dark theme. Built entirely using AI prompting and then customised manually.</p>
+        <div class="card-tags">
+          <span class="tag">Claude AI</span>
+          <span class="tag">Chart.js</span>
+          <span class="tag">HTML/CSS</span>
+        </div>
+        <div class="card-links">
+          <a href="#" class="card-link cl-yellow">Live Demo</a>
+          <a href="#" class="card-link cl-outline">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-accent accent-cyan"></div>
+      <div class="card-body">
+        <span class="card-emoji">🍕</span>
+        <div class="card-title">FoodieZone — Restaurant Page</div>
+        <p class="card-desc">A vibrant restaurant landing page with menu section, gallery, and contact form. Designed fast using Framer AI + manual tweaks.</p>
+        <div class="card-tags">
+          <span class="tag">Framer AI</span>
+          <span class="tag">CSS Grid</span>
+          <span class="tag">Responsive</span>
+        </div>
+        <div class="card-links">
+          <a href="#" class="card-link cl-yellow">Live Demo</a>
+          <a href="#" class="card-link cl-outline">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-accent accent-pink"></div>
+      <div class="card-body">
+        <span class="card-emoji">💼</span>
+        <div class="card-title">HireMe — Resume Site</div>
+        <p class="card-desc">A personal resume website for a friend — fully responsive, PDF downloadable, and built in under 2 hours using AI tools.</p>
+        <div class="card-tags">
+          <span class="tag">ChatGPT</span>
+          <span class="tag">v0.dev</span>
+          <span class="tag">HTML/CSS</span>
+        </div>
+        <div class="card-links">
+          <a href="#" class="card-link cl-yellow">Live Demo</a>
+          <a href="#" class="card-link cl-outline">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="section-label">Who I Am</div>
+  <div class="section-title">About Me</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Hey! I'm <strong>Aryan Tripathi</strong> — a passionate web builder who uses the latest AI tools to create fast, beautiful, and functional websites.</p>
+      <p>I'm a <strong>fresher</strong> who believes that AI is a superpower — not a shortcut. I use it to move fast, experiment boldly, and build things that look great and work even better.</p>
+      <p>My approach: <strong>AI for speed, creativity for impact.</strong> Every project I take on, I bring fresh ideas and a sharp eye for design.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-box">
+        <div class="stat-num">6+</div>
+        <div class="stat-label">Projects Built</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">10+</div>
+        <div class="stat-label">AI Tools Used</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Ideas to Build</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Passion Driven</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label" style="justify-content:center;display:flex">Let's Work</div>
+    <h2>Got a project in mind?<br>Let's build it. 🚀</h2>
+    <p>I'm open to freelance projects, collaborations, and cool ideas. Drop me a message!</p>
+    <div class="contact-links">
+      <a href="mailto:aryan@email.com" class="btn btn-primary">✉ Email Me</a>
+      <a href="https://linkedin.com" target="_blank" class="btn btn-outline">LinkedIn</a>
+      <a href="https://github.com" target="_blank" class="btn btn-outline">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  Designed & built by <span>Aryan Tripathi</span> · Powered by AI ✦ 2025
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .tool-chip, .project-card').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+  });
+</script>
+</body>
+</html>
