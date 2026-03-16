@@ -731,6 +731,130 @@
       border-color: rgba(245, 240, 232, .35)
     }
 
+    /* EMAIL POPUP */
+    .email-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    .email-popup {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) translateY(6px);
+      background: var(--bg3);
+      border: 1px solid var(--line);
+      padding: .6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s, transform .2s;
+      z-index: 500;
+    }
+
+    .email-popup.show {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .email-popup span {
+      font-family: var(--mono);
+      font-size: .65rem;
+      color: var(--white);
+      letter-spacing: .08em;
+    }
+
+    .email-copy-btn {
+      font-family: var(--mono);
+      font-size: .55rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      background: var(--white);
+      color: var(--bg);
+      border: none;
+      padding: .3rem .7rem;
+      cursor: none;
+      transition: opacity .2s, background .2s;
+    }
+
+    .email-copy-btn:hover {
+      opacity: .8
+    }
+
+    .email-copy-btn.copied {
+      background: #4ade80;
+      color: #0a0a0a;
+    }
+
+    .email-popup::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--bg3);
+    }
+
+    /* COPY TOAST */
+    #copyToast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #4ade80;
+      color: #0a0a0a;
+      font-family: var(--mono);
+      font-size: .65rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: .7rem 1.6rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s, transform .25s;
+      z-index: 9999;
+    }
+
+    #copyToast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    #formToast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      font-family: var(--mono);
+      font-size: .65rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: .7rem 1.6rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s, transform .25s;
+      transform: translateY(20px);
+      z-index: 9999;
+    }
+
+    #formToast.success {
+      background: #4ade80;
+      color: #0a0a0a;
+    }
+
+    #formToast.error {
+      background: #f87171;
+      color: #0a0a0a;
+    }
+
+    #formToast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .cform {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1009,7 +1133,7 @@
       <div class="rv d1">
         <div class="stats-box">
           <div class="stat">
-            <div class="stat-n">6+</div>
+            <div class="stat-n">3+</div>
             <div class="stat-l">Projects Built</div>
           </div>
           <div class="stat">
@@ -1038,90 +1162,65 @@
       <div class="proj-item rv">
         <div class="proj-n">001</div>
         <div class="proj-info">
-          <h3>ShopEasy</h3>
-          <p>E-Commerce UI · 2025</p>
+          <h3>Student Portal</h3>
+          <p>Mangalmay Group of Institutions · 2025</p>
         </div>
-        <div class="proj-desc">A clean, fast e-commerce landing page built using Claude AI and v0.dev. Features product
-          cards, cart UI, and responsive layout.</div>
+        <div class="proj-desc">A comprehensive student portal with attendance tracking, weekly timetable, semester
+          marks, fee management, and hostel booking — built with Next.js and Supabase.</div>
         <div class="proj-tags">
-          <span class="ptag">Claude AI</span>
-          <span class="ptag">v0.dev</span>
-          <span class="ptag">HTML/CSS</span>
+          <span class="ptag">Next.js</span>
+          <span class="ptag">Supabase</span>
+          <span class="ptag">TypeScript</span>
+          <span class="ptag">ShadCN UI</span>
+          <span class="ptag">Tailwind CSS</span>
         </div>
       </div>
 
       <div class="proj-item rv d1">
         <div class="proj-n">002</div>
         <div class="proj-info">
-          <h3>AskBot</h3>
-          <p>AI Chat Interface · 2025</p>
+          <h3>Free Fire Frenzy</h3>
+          <p>eSports Tournament Platform · 2025</p>
         </div>
-        <div class="proj-desc">A minimal AI chatbot frontend designed with Framer AI and polished with custom CSS.
-          Smooth animations and real-time feel.</div>
+        <div class="proj-desc">A full-stack eSports platform for hosting Free Fire tournaments. Features role-based
+          dashboards for Players, Staff &amp; Admins, real-time wallet system, automated prize payouts, and live match
+          room details.</div>
         <div class="proj-tags">
-          <span class="ptag">Framer AI</span>
-          <span class="ptag">ChatGPT</span>
-          <span class="ptag">JavaScript</span>
+          <span class="ptag">Next.js</span>
+          <span class="ptag">Firebase</span>
+          <span class="ptag">TypeScript</span>
+          <span class="ptag">ShadCN UI</span>
+          <span class="ptag">Tailwind CSS</span>
         </div>
       </div>
 
       <div class="proj-item rv d2">
         <div class="proj-n">003</div>
         <div class="proj-info">
-          <h3>CreativeStudio</h3>
-          <p>Agency Site · 2025</p>
+          <h3>BGHQ</h3>
+          <p>Free Fire Point Table Generator · 2025</p>
         </div>
-        <div class="proj-desc">A bold agency website with animated hero, service cards, and testimonials — generated and
-          refined using Bolt.new and Cursor.</div>
+        <div class="proj-desc">A neon cyberpunk tournament point table generator for Free Fire. Multi-page app with
+          admin panel, live dashboard, and hero video background — fully browser-based, no backend required.</div>
         <div class="proj-tags">
-          <span class="ptag">Bolt.new</span>
-          <span class="ptag">Cursor</span>
-          <span class="ptag">CSS Animations</span>
+          <span class="ptag">HTML5</span>
+          <span class="ptag">CSS3</span>
+          <span class="ptag">Vanilla JS</span>
+          <span class="ptag">Cyberpunk UI</span>
         </div>
       </div>
 
-      <div class="proj-item rv">
+      <div class="proj-item rv" style="cursor:none;"
+        onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
         <div class="proj-n">004</div>
         <div class="proj-info">
-          <h3>DataDash</h3>
-          <p>Dashboard UI · 2025</p>
+          <h3>Hire Me</h3>
+          <p>Let's Work Together · 2025</p>
         </div>
-        <div class="proj-desc">A data dashboard template with charts, stats, and dark theme. Built entirely using AI
-          prompting and then customised manually.</div>
+        <div class="proj-desc">Looking for a developer who ships fast with AI? I'm open to freelance projects,
+          collaborations, and internships. Let's build something great together.</div>
         <div class="proj-tags">
-          <span class="ptag">Claude AI</span>
-          <span class="ptag">Chart.js</span>
-          <span class="ptag">HTML/CSS</span>
-        </div>
-      </div>
-
-      <div class="proj-item rv d1">
-        <div class="proj-n">005</div>
-        <div class="proj-info">
-          <h3>FoodieZone</h3>
-          <p>Restaurant Page · 2025</p>
-        </div>
-        <div class="proj-desc">A vibrant restaurant landing page with menu section, gallery, and contact form. Designed
-          fast using Framer AI + manual tweaks.</div>
-        <div class="proj-tags">
-          <span class="ptag">Framer AI</span>
-          <span class="ptag">CSS Grid</span>
-          <span class="ptag">Responsive</span>
-        </div>
-      </div>
-
-      <div class="proj-item rv d2">
-        <div class="proj-n">006</div>
-        <div class="proj-info">
-          <h3>HireMe</h3>
-          <p>Resume Site · 2025</p>
-        </div>
-        <div class="proj-desc">A personal resume website — fully responsive, PDF downloadable, and built in under 2
-          hours using AI tools.</div>
-        <div class="proj-tags">
-          <span class="ptag">ChatGPT</span>
-          <span class="ptag">v0.dev</span>
-          <span class="ptag">HTML/CSS</span>
+          <span class="ptag">↓ Go to Contact</span>
         </div>
       </div>
 
@@ -1177,6 +1276,14 @@
         <div class="tool-name">GitHub</div>
         <div class="tool-type">Version Control</div>
       </div>
+      <div class="tool-card" data-type="AI"><span class="tool-icon">✦</span>
+        <div class="tool-name">Gemini</div>
+        <div class="tool-type">AI Assistant</div>
+      </div>
+      <div class="tool-card" data-type="AI"><span class="tool-icon">◍</span>
+        <div class="tool-name">NanoBanana</div>
+        <div class="tool-type">AI Image Generation</div>
+      </div>
       <div class="tool-card" data-type="New"><span class="tool-icon">✧</span>
         <div class="tool-name">Always Learning</div>
         <div class="tool-type">Next Tool →</div>
@@ -1190,21 +1297,27 @@
     <div class="contact-big rv">
       <span class="solid">Got a</span>
       <span class="ghost">project?</span>
-      <span class="solid">Let's build. 🚀</span>
+      <span class="solid">Let's build.</span>
     </div>
     <p class="contact-note rv">Open to freelance projects, collaborations, and cool ideas. If you have a vision, I have
       the AI tools and creativity to bring it to life — fast.</p>
     <div class="contact-socials rv">
-      <a href="/cdn-cgi/l/email-protection#b4d5c6cdd5daf4d1d9d5ddd89ad7dbd9" class="soc">✉ Email</a>
-      <a href="https://linkedin.com" class="soc">LinkedIn</a>
-      <a href="https://github.com" class="soc">GitHub</a>
+      <div class="email-wrap">
+        <a href="#" class="soc" id="emailBtn">✉ Email</a>
+        <div class="email-popup" id="emailPopup">
+          <span>tripathiaryan346@gmail.com</span>
+          <button class="email-copy-btn" id="copyBtn">Copy</button>
+        </div>
+      </div>
+      <a href="https://www.linkedin.com/in/aryan-tripathi52" target="_blank" class="soc">↗ LinkedIn</a>
+      <a href="https://instagram.com/_aryan_tripathi_52" target="_blank" class="soc">↗ Instagram</a>
     </div>
-    <form class="cform rv" onsubmit="return false">
-      <div class="fg"><label>Your Name</label><input type="text" placeholder="Your name"></div>
-      <div class="fg"><label>Email</label><input type="email" placeholder="your@email.com"></div>
-      <div class="fg full"><label>Project Idea</label><textarea
-          placeholder="Tell me what you want to build..."></textarea></div>
-      <button type="submit" class="btn-send full">Send Message →</button>
+    <form class="cform rv" id="contactForm">
+      <div class="fg"><label>Your Name</label><input type="text" id="fname" placeholder="Your name" required></div>
+      <div class="fg"><label>Email</label><input type="email" id="femail" placeholder="your@email.com" required></div>
+      <div class="fg full"><label>Project Idea</label><textarea id="fmsg"
+          placeholder="Tell me what you want to build..." required></textarea></div>
+      <button type="submit" class="btn-send full" id="sendBtn">Send Message →</button>
     </form>
   </section>
 
@@ -1213,6 +1326,9 @@
     <p>Designed &amp; built by <span>Aryan Tripathi</span> · Powered by <span>AI ✦</span> 2025</p>
     <p>Built with <span>Claude AI</span> — Available for projects</p>
   </footer>
+
+  <div id="copyToast">✓ Email Copied!</div>
+  <div id="formToast"></div>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
   <script>
@@ -1345,6 +1461,97 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in') });
     }, { threshold: .1 });
     document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+    /* CONTACT FORM → GOOGLE SHEETS */
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzuo4AQcdZqmx-oHt3c2Hw9i8EphSUQ-ImOEuPP_KVbAI6Omv2Q7vUZ9SkI5P1rP5Dl/exec';
+
+    function showFormToast(msg, type) {
+      const t = document.getElementById('formToast');
+      t.textContent = msg;
+      t.className = type + ' show';
+      setTimeout(() => { t.className = ''; }, 3500);
+    }
+
+    document.getElementById('contactForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = document.getElementById('sendBtn');
+      const name = document.getElementById('fname').value.trim();
+      const email = document.getElementById('femail').value.trim();
+      const message = document.getElementById('fmsg').value.trim();
+
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      try {
+        await fetch(SHEET_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, message })
+        });
+        showFormToast('✓ Message Sent!', 'success');
+        document.getElementById('contactForm').reset();
+      } catch (err) {
+        showFormToast('✕ Failed. Try again.', 'error');
+      } finally {
+        btn.textContent = 'Send Message →';
+        btn.disabled = false;
+      }
+    });
+
+    /* EMAIL POPUP */
+    const emailBtn = document.getElementById('emailBtn');
+    const emailPopup = document.getElementById('emailPopup');
+    const copyBtn = document.getElementById('copyBtn');
+
+    emailBtn.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      emailPopup.classList.toggle('show');
+    });
+
+    copyBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const email = 'tripathiaryan346@gmail.com';
+
+      // Try modern clipboard API first, fallback to execCommand
+      function showCopied() {
+        copyBtn.textContent = 'Copied!';
+        copyBtn.classList.add('copied');
+        setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('copied'); }, 2000);
+
+        // Show toast
+        const toast = document.getElementById('copyToast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+      }
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(email).then(showCopied).catch(() => fallbackCopy(email, showCopied));
+      } else {
+        fallbackCopy(email, showCopied);
+      }
+    });
+
+    function fallbackCopy(text, cb) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      try { document.execCommand('copy'); cb(); } catch (e) { }
+      document.body.removeChild(ta);
+    }
+
+    document.addEventListener('click', e => {
+      if (!emailBtn.contains(e.target) && !emailPopup.contains(e.target)) {
+        emailPopup.classList.remove('show');
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+      emailPopup.classList.remove('show');
+    }, { passive: true });
   </script>
 </body>
 
