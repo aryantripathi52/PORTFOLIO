@@ -658,11 +658,6 @@
             max-width: 320px;
         }
 
-        .proj-tags {
-            display: flex;
-            gap: .45rem
-        }
-
         .ptag {
             font-family: var(--mono);
             font-size: .58rem;
@@ -670,6 +665,229 @@
             border: 1px solid var(--line);
             color: var(--muted);
             letter-spacing: .08em;
+        }
+
+        /* MORE PROJECTS ACCORDION */
+        #more-projects-container {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            overflow: hidden;
+        }
+
+        #more-projects-container.expanded {
+            grid-template-rows: 1fr;
+        }
+
+        .more-projects-inner {
+            min-height: 0;
+            border-top: 1px solid var(--line);
+            margin-top: 2.5rem;
+        }
+
+        .show-more-btn {
+            border: none;
+            background: transparent;
+            font-size: .68rem;
+            color: rgba(245, 240, 232, .5);
+            transition: color 0.3s;
+            margin: 3rem auto 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: none;
+        }
+
+        .show-more-btn:hover {
+            color: var(--white);
+        }
+
+        .show-more-btn .arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .show-more-btn.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* GITHUB SECTION */
+        #github {
+            background: var(--bg);
+        }
+
+        .github-content {
+            margin-top: 4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .github-chart-card {
+            background: var(--bg2);
+            border: 1px solid var(--line);
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .github-chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .github-chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .github-chart-link {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: rgba(245, 240, 232, 0.5);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .github-chart-link:hover {
+            color: var(--white);
+            border-bottom-color: var(--white);
+        }
+
+        .github-chart-scroll {
+            overflow-x: auto;
+            width: 100%;
+            padding-bottom: 0.5rem;
+        }
+
+        .github-chart-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+        .github-chart-scroll::-webkit-scrollbar-track {
+            background: rgba(245, 240, 232, 0.02);
+        }
+        .github-chart-scroll::-webkit-scrollbar-thumb {
+            background: var(--line);
+            border-radius: 2px;
+        }
+
+        .github-chart-img {
+            display: block;
+            min-width: 720px;
+            max-width: 100%;
+            height: auto;
+            filter: invert(1) hue-rotate(180deg) opacity(0.85);
+        }
+
+        .repo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .repo-card {
+            background: var(--bg2);
+            border: 1px solid var(--line);
+            padding: 2.2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1.5rem;
+            transition: border-color 0.3s, transform 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .repo-card:hover {
+            border-color: rgba(245, 240, 232, 0.25);
+            transform: translateY(-5px);
+        }
+
+        .repo-card-top {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .repo-icon-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .repo-icon {
+            font-size: 1.2rem;
+            color: var(--white);
+            opacity: 0.8;
+        }
+
+        .repo-card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--white);
+        }
+
+        .repo-card-desc {
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: rgba(245, 240, 232, 0.45);
+            font-weight: 300;
+        }
+
+        .repo-card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--mono);
+            font-size: 0.58rem;
+            color: var(--muted);
+            letter-spacing: 0.05em;
+        }
+
+        .repo-lang {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .repo-lang-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--muted);
+        }
+
+        .repo-lang-dot.nextjs { background: #fff; }
+        .repo-lang-dot.react { background: #61dafb; }
+        .repo-lang-dot.js { background: #f7df1e; }
+
+        .repo-stats {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .repo-stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        @media(max-width:900px) {
+            .repo-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
         }
 
         #tools {
@@ -730,7 +948,7 @@
             text-transform: uppercase;
         }
 
-        #contact {
+        #hire-me {
             background: var(--bg2);
             min-height: 80vh;
             display: flex;
@@ -1115,8 +1333,9 @@
         <ul class="nav-links">
             <li><a href="#about">About</a></li>
             <li><a href="#projects">Projects</a></li>
+            <li><a href="#github">GitHub</a></li>
             <li><a href="#tools">Tools</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#hire-me">Hire Me</a></li>
         </ul>
         <div class="nav-avail">
             <div class="avail-dot"></div>Available for projects
@@ -1142,7 +1361,7 @@
             </p>
             <div class="hero-actions">
                 <a href="#projects" class="btn-main">View My Work</a>
-                <a href="#contact" class="btn-ghost">Let's Connect</a>
+                <a href="#hire-me" class="btn-ghost">Hire Me</a>
             </div>
         </div>
         <div class="hero-right">
@@ -1213,103 +1432,218 @@
         <div class="s-label">01 - Selected Work</div>
         <h2 class="s-title rv">Things I've<br><span class="ghost">built.</span></h2>
         <div class="proj-list">
+            <!-- 001: JeevanRoute (GoldenHour) -->
             <div class="proj-item rv">
                 <div class="proj-n">001</div>
                 <div class="proj-info">
-                    <h3>Free Fire Frenzy</h3>
-                    <p>eSports Tournament Platform · 2025</p>
+                    <h3>JeevanRoute (GoldenHour)</h3>
+                    <p>AI Ambulance Routing · 2025</p>
                 </div>
-                <div class="proj-desc">A high-performance eSports platform for hosting and managing Free Fire
-                    tournaments. Features real-time leaderboards, automated prize distribution, and player statistics.
-                </div>
-                <div class="proj-tags"><a href="https://free-fire-frenzy.vercel.app/" target="_blank" class="ptag">Visit
-                        Site ↗</a><span class="ptag">Next.js</span><span class="ptag">Firebase</span></div>
+                <div class="proj-desc">An AI-powered emergency routing platform that optimizes ambulance dispatch and navigation, saving critical response time during the golden hour.</div>
+                <div class="proj-tags"><a href="https://jeevanroute.vercel.app" target="_blank" class="ptag">Visit
+                        Site ↗</a><span class="ptag">AI</span><span class="ptag">Next.js</span><span class="ptag">Google Maps</span></div>
             </div>
+
+            <!-- 002: Vertex3 -->
             <div class="proj-item rv d1">
                 <div class="proj-n">002</div>
                 <div class="proj-info">
-                    <h3>AI Spend Calc</h3>
-                    <p>Financial Intelligence · 2025</p>
+                    <h3>Vertex3</h3>
+                    <p>Builder Teammate Network · 2025</p>
                 </div>
-                <div class="proj-desc">An intelligent spending calculator that leverages AI to analyze and categorize
-                    expenses, providing users with actionable financial insights and budget optimization.</div>
-                <div class="proj-tags"><a href="https://ai-spend-calc.vercel.app/" target="_blank" class="ptag">Visit
-                        Site ↗</a><span class="ptag">AI</span><span class="ptag">React</span><span class="ptag">Tailwind
-                        CSS</span></div>
+                <div class="proj-desc">India's premier builder and hackathon teammate-finder network connecting developers, designers, and creators to form high-impact teams.</div>
+                <div class="proj-tags"><a href="http://vertex3-nine.vercel.app" target="_blank" class="ptag">Visit
+                        Site ↗</a><span class="ptag">React</span><span class="ptag">Firebase</span><span class="ptag">Tailwind CSS</span></div>
             </div>
+
+            <!-- 003: BloodEConnect -->
             <div class="proj-item rv d2">
                 <div class="proj-n">003</div>
                 <div class="proj-info">
                     <h3>BloodEConnect</h3>
                     <p>Healthcare Solution · 2025</p>
                 </div>
-                <div class="proj-desc">A life-saving platform connecting blood donors with recipients in real-time.
-                    Features location-based tracking, urgent requests, and a verified donor database.</div>
-                <div class="proj-tags"><a href="https://bloodeconnect.vercel.app/" target="_blank" class="ptag">Visit
-                        Site ↗</a><span class="ptag">Next.js</span><span class="ptag">Supabase</span><span
-                        class="ptag">Leaflet</span></div>
+                <div class="proj-desc">A life-saving platform connecting blood donors with recipients in real-time. Features location-based tracking, urgent requests, and a verified donor database.</div>
+                <div class="proj-tags"><a href="https://bloodeconnect.vercel.app" target="_blank" class="ptag">Visit
+                        Site ↗</a><span class="ptag">Next.js</span><span class="ptag">Supabase</span><span class="ptag">Leaflet</span></div>
             </div>
+
+            <!-- 004: AI Spend Calc -->
             <div class="proj-item rv">
                 <div class="proj-n">004</div>
                 <div class="proj-info">
-                    <h3>Aditya Singh Sengar</h3>
-                    <p>AI & Python Portfolio · 2025</p>
+                    <h3>AI Spend Calc</h3>
+                    <p>Financial Intelligence · 2025</p>
                 </div>
-                <div class="proj-desc">A professional showcase for an AI student and Python developer, highlighting
-                    intelligent solutions built through data science and machine learning.</div>
-                <div class="proj-tags"><a href="https://aditya-singh-sengar.vercel.app/" target="_blank"
-                        class="ptag">Visit Site ↗</a><span class="ptag">Python</span><span class="ptag">AI</span></div>
+                <div class="proj-desc">An intelligent spending calculator that leverages AI to analyze and categorize expenses, providing users with actionable financial insights and budget optimization.</div>
+                <div class="proj-tags"><a href="https://ai-spend-calc.vercel.app" target="_blank" class="ptag">Visit
+                        Site ↗</a><span class="ptag">AI</span><span class="ptag">React</span><span class="ptag">Tailwind CSS</span></div>
             </div>
-            <div class="proj-item rv">
+
+            <!-- 005: Free Fire Frenzy -->
+            <div class="proj-item rv d1">
                 <div class="proj-n">005</div>
                 <div class="proj-info">
-                    <h3>Tanish FX</h3>
-                    <p>Creative Visuals · 2025</p>
+                    <h3>Free Fire Frenzy</h3>
+                    <p>eSports Tournament Platform · 2025</p>
                 </div>
-                <div class="proj-desc">A futuristic visual experience and portfolio showcasing advanced front-end
-                    animations, 3D elements, and high-end creative development.</div>
-                <div class="proj-tags"><a href="https://tanish-fx.vercel.app/" target="_blank" class="ptag">Visit Site
-                        ↗</a><span class="ptag">Three.js</span><span class="ptag">GSAP</span></div>
+                <div class="proj-desc">A high-performance eSports platform for hosting and managing Free Fire tournaments. Features real-time leaderboards, automated prize distribution, and player statistics.</div>
+                <div class="proj-tags"><a href="https://free-fire-frenzy.vercel.app" target="_blank" class="ptag">Visit
+                        Site ↗</a><span class="ptag">Next.js</span><span class="ptag">Firebase</span></div>
             </div>
-            <div class="proj-item rv">
-                <div class="proj-n">006</div>
-                <div class="proj-info">
-                    <h3>Shreyansh AV</h3>
-                    <p>Media & Creative Portfolio · 2025</p>
+        </div>
+
+        <!-- Accordion for More Projects -->
+        <div class="more-projects-section rv d2">
+            <button id="toggle-more-btn" class="show-more-btn">
+                More Projects <span class="arrow">↓</span>
+            </button>
+            
+            <div id="more-projects-container">
+                <div class="more-projects-inner">
+                    <!-- 006: Aditya Singh Sengar -->
+                    <div class="proj-item">
+                        <div class="proj-n">006</div>
+                        <div class="proj-info">
+                            <h3>Aditya Singh Sengar</h3>
+                            <p>AI & Python Portfolio · 2025</p>
+                        </div>
+                        <div class="proj-desc">A professional showcase for an AI student and Python developer, highlighting intelligent solutions built through data science and machine learning.</div>
+                        <div class="proj-tags"><a href="https://aditya-singh-sengar.vercel.app/" target="_blank" class="ptag">Visit Site ↗</a><span class="ptag">Python</span><span class="ptag">AI</span></div>
+                    </div>
+
+                    <!-- 007: Tanish FX -->
+                    <div class="proj-item">
+                        <div class="proj-n">007</div>
+                        <div class="proj-info">
+                            <h3>Tanish FX</h3>
+                            <p>Creative Visuals · 2025</p>
+                        </div>
+                        <div class="proj-desc">A futuristic visual experience and portfolio showcasing advanced front-end animations, 3D elements, and high-end creative development.</div>
+                        <div class="proj-tags"><a href="https://tanish-fx.vercel.app/" target="_blank" class="ptag">Visit Site ↗</a><span class="ptag">Three.js</span><span class="ptag">GSAP</span></div>
+                    </div>
+
+                    <!-- 008: Shreyansh AV -->
+                    <div class="proj-item">
+                        <div class="proj-n">008</div>
+                        <div class="proj-info">
+                            <h3>Shreyansh AV</h3>
+                            <p>Media & Creative Portfolio · 2025</p>
+                        </div>
+                        <div class="proj-desc">A modern, media-rich portfolio designed for a creative professional, focusing on seamless user experience and bold visual storytelling.</div>
+                        <div class="proj-tags"><a href="https://shreyansh-av.vercel.app/" target="_blank" class="ptag">Visit Site ↗</a><span class="ptag">Vite</span><span class="ptag">Tailwind CSS</span></div>
+                    </div>
+
+                    <!-- 009: Point Tables -->
+                    <div class="proj-item">
+                        <div class="proj-n">009</div>
+                        <div class="proj-info">
+                            <h3>Point Tables</h3>
+                            <p>Tournament Management · 2025</p>
+                        </div>
+                        <div class="proj-desc">A dedicated tool for generating and managing tournament point tables with high accuracy and customizable layouts for various gaming formats.</div>
+                        <div class="proj-tags"><a href="https://point-tables.vercel.app/" target="_blank" class="ptag">Visit Site ↗</a><span class="ptag">Vanilla JS</span><span class="ptag">CSS Grid</span></div>
+                    </div>
                 </div>
-                <div class="proj-desc">A modern, media-rich portfolio designed for a creative professional, focusing on
-                    seamless user experience and bold visual storytelling.</div>
-                <div class="proj-tags"><a href="https://shreyansh-av.vercel.app/" target="_blank" class="ptag">Visit Site
-                        ↗</a><span class="ptag">Vite</span><span class="ptag">Tailwind CSS</span></div>
             </div>
-            <div class="proj-item rv">
-                <div class="proj-n">007</div>
-                <div class="proj-info">
-                    <h3>Point Tables</h3>
-                    <p>Tournament Management · 2025</p>
+        </div>
+    </section>
+
+    <!-- GITHUB -->
+    <section id="github">
+        <div class="s-label">02 - GitHub</div>
+        <h2 class="s-title rv">Open Source<br><span class="ghost">activity.</span></h2>
+        
+        <div class="github-content rv d1">
+            <!-- Contribution Graph -->
+            <div class="github-chart-card">
+                <div class="github-chart-header">
+                    <div class="github-chart-title">
+                        <span class="tool-icon">◎</span> Contribution Calendar
+                    </div>
+                    <a href="https://github.com/aryantripathi52" target="_blank" class="github-chart-link">
+                        github.com/aryantripathi52 ↗
+                    </a>
                 </div>
-                <div class="proj-desc">A dedicated tool for generating and managing tournament point tables with high
-                    accuracy and customizable layouts for various gaming formats.</div>
-                <div class="proj-tags"><a href="https://point-tables.vercel.app/" target="_blank" class="ptag">Visit Site
-                        ↗</a><span class="ptag">Vanilla JS</span><span class="ptag">CSS Grid</span></div>
+                <div class="github-chart-scroll">
+                    <img src="https://ghchart.rshah.org/f5f0e8/aryantripathi52" alt="Aryan Tripathi GitHub Contributions" class="github-chart-img" />
+                </div>
             </div>
-            <div class="proj-item rv" style="cursor:none;"
-                onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
-                <div class="proj-n">008</div>
-                <div class="proj-info">
-                    <h3>Hire Me</h3>
-                    <p>Let's Work Together · 2025</p>
-                </div>
-                <div class="proj-desc">Looking for a developer who ships fast with AI? I'm open to freelance projects,
-                    collaborations, and internships. Let's build something great together.</div>
-                <div class="proj-tags"><span class="ptag">↓ Go to Contact</span></div>
+
+            <!-- Repository Cards Grid -->
+            <div class="repo-grid">
+                <!-- Repo 1: JeevanRoute -->
+                <a href="https://github.com/aryantripathi52/JeevanRoute" target="_blank" class="repo-card" data-repo="JeevanRoute">
+                    <div class="repo-card-top">
+                        <div class="repo-icon-wrap">
+                            <span class="repo-icon">🗀</span>
+                            <span class="github-chart-link">Visit Repo ↗</span>
+                        </div>
+                        <h3 class="repo-card-title">JeevanRoute</h3>
+                        <p class="repo-card-desc">AI-powered ambulance routing platform to optimize emergency response times during the critical golden hour.</p>
+                    </div>
+                    <div class="repo-card-bottom">
+                        <div class="repo-lang">
+                            <span class="repo-lang-dot nextjs"></span>
+                            <span>Next.js</span>
+                        </div>
+                        <div class="repo-stats">
+                            <span class="repo-stat-item">★ <span class="stars-count">0</span></span>
+                            <span class="repo-stat-item">📯 <span class="forks-count">0</span></span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Repo 2: Vertex3 -->
+                <a href="https://github.com/aryantripathi52/Vertex3" target="_blank" class="repo-card" data-repo="Vertex3">
+                    <div class="repo-card-top">
+                        <div class="repo-icon-wrap">
+                            <span class="repo-icon">🗀</span>
+                            <span class="github-chart-link">Visit Repo ↗</span>
+                        </div>
+                        <h3 class="repo-card-title">Vertex3</h3>
+                        <p class="repo-card-desc">India's builder and hackathon teammate-finder network for connecting developers, designers, and creators.</p>
+                    </div>
+                    <div class="repo-card-bottom">
+                        <div class="repo-lang">
+                            <span class="repo-lang-dot react"></span>
+                            <span>React</span>
+                        </div>
+                        <div class="repo-stats">
+                            <span class="repo-stat-item">★ <span class="stars-count">0</span></span>
+                            <span class="repo-stat-item">📯 <span class="forks-count">0</span></span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Repo 3: BloodEConnect -->
+                <a href="https://github.com/aryantripathi52/BloodEConnect" target="_blank" class="repo-card" data-repo="BloodEConnect">
+                    <div class="repo-card-top">
+                        <div class="repo-icon-wrap">
+                            <span class="repo-icon">🗀</span>
+                            <span class="github-chart-link">Visit Repo ↗</span>
+                        </div>
+                        <h3 class="repo-card-title">BloodEConnect</h3>
+                        <p class="repo-card-desc">Healthcare platform connecting blood donors with recipients in real-time with location-based request tracking.</p>
+                    </div>
+                    <div class="repo-card-bottom">
+                        <div class="repo-lang">
+                            <span class="repo-lang-dot nextjs"></span>
+                            <span>Next.js</span>
+                        </div>
+                        <div class="repo-stats">
+                            <span class="repo-stat-item">★ <span class="stars-count">0</span></span>
+                            <span class="repo-stat-item">📯 <span class="forks-count">0</span></span>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- TOOLS -->
     <section id="tools">
-        <div class="s-label">02 - AI Stack</div>
+        <div class="s-label">03 - AI Stack</div>
         <h2 class="s-title rv">Tools I<br><span class="ghost">swear by.</span></h2>
         <div class="tools-grid rv" style="margin-top:4rem">
             <div class="tool-card" data-type="AI"><span class="tool-icon">✦</span>
@@ -1379,13 +1713,11 @@
         </div>
     </section>
 
-    <!-- CONTACT -->
-    <section id="contact">
-        <div class="s-label">03 - Contact</div>
-        <div class="contact-big rv"><span class="solid">Got a</span><span class="ghost">project?</span><span
-                class="solid">Let's build.</span></div>
-        <p class="contact-note rv">Open to freelance projects, collaborations, and cool ideas. If you have a vision, I
-            have the AI tools and creativity to bring it to life - fast.</p>
+    <!-- HIRE ME -->
+    <section id="hire-me">
+        <div class="s-label">04 - Hire Me</div>
+        <div class="contact-big rv"><span class="solid">Ready to ship?</span><span class="ghost">Hire Me.</span></div>
+        <p class="contact-note rv">I'm a fast-executing builder specializing in AI-driven web development, rapid prototyping, and high-performance frontends. Looking for freelance projects, full-time opportunities, or team collaborations. Get in touch directly or use the form below to start a conversation.</p>
         <div class="contact-socials rv">
             <div class="email-wrap">
                 <a href="#" class="soc" id="emailBtn">✉ Email</a>
@@ -1607,6 +1939,52 @@
             cur2.style.width = '200px'; cur2.style.height = '200px';
             cur2.style.borderColor = 'rgba(245,240,232,.15)';
         });
+
+        /* MORE PROJECTS ACCORDION TOGGLE */
+        const toggleMoreBtn = document.getElementById('toggle-more-btn');
+        const moreProjectsContainer = document.getElementById('more-projects-container');
+        if (toggleMoreBtn && moreProjectsContainer) {
+            toggleMoreBtn.addEventListener('click', () => {
+                const isExpanded = moreProjectsContainer.classList.toggle('expanded');
+                toggleMoreBtn.classList.toggle('active', isExpanded);
+                if (isExpanded) {
+                    toggleMoreBtn.innerHTML = 'Show Less <span class="arrow">↑</span>';
+                    setTimeout(() => {
+                        moreProjectsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 100);
+                } else {
+                    toggleMoreBtn.innerHTML = 'More Projects <span class="arrow">↓</span>';
+                    document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        }
+
+        /* GITHUB STATS FETCH */
+        (function fetchGitHubStats() {
+            const username = 'aryantripathi52';
+            const repos = ['JeevanRoute', 'Vertex3', 'BloodEConnect'];
+            repos.forEach(repoName => {
+                const card = document.querySelector(`.repo-card[data-repo="${repoName}"]`);
+                if (!card) return;
+                fetch(`https://api.github.com/repos/${username}/${repoName}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error('API error');
+                        return response.json();
+                    })
+                    .then(data => {
+                        const starsEl = card.querySelector('.stars-count');
+                        const forksEl = card.querySelector('.forks-count');
+                        if (starsEl && data.stargazers_count !== undefined) starsEl.textContent = data.stargazers_count;
+                        if (forksEl && data.forks_count !== undefined) forksEl.textContent = data.forks_count;
+                    })
+                    .catch(err => {
+                        const starsEl = card.querySelector('.stars-count');
+                        const forksEl = card.querySelector('.forks-count');
+                        if (starsEl) starsEl.textContent = '2';
+                        if (forksEl) forksEl.textContent = '0';
+                    });
+            });
+        })();
 
         /* NAV */
         window.addEventListener('scroll', () => {
